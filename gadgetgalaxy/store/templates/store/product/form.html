@@ -1,0 +1,18 @@
+{% extends "store/base.html" %}
+
+{% block title %}
+    {% if object %}Update {{ object.name }}{% else %}Add New Product{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% if object %}Update {{ object.name }}{% else %}Add New Product{% endif %}</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            {% if object %}Update{% else %}Create{% endif %}
+        </button>
+        <a href="{% url 'store:product_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

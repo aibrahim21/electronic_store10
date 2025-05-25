@@ -1,0 +1,32 @@
+{% extends "store/base.html" %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% if category %}{{ category.name }}{% else %}All Products{% endif %}</h2>
+    
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card product-card">
+                    {% if product.image %}
+                        <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">${{ product.price }}</p>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                        <a href="{% url 'store:product_update' product.pk %}" class="btn btn-secondary">Edit</a>
+                        <a href="{% url 'store:product_delete' product.pk %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p>No products available.</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
